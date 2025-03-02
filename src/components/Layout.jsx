@@ -1,3 +1,5 @@
+import Modal from "./Modal"
+import Authentication from "./Authentication"
 
 export default function Layout(props) {
     const { children } = props
@@ -21,6 +23,9 @@ export default function Layout(props) {
     )
     return(
         <>
+            <Modal>
+                <Authentication />
+            </Modal>
             {header}
             <main>
                 {children}
