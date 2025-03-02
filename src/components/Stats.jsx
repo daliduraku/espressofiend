@@ -4,22 +4,24 @@ import { calculateCoffeeStats, calculateCurrentCaffeineLevel, coffeeConsumptionH
 function StatCard(props) {
     const { lg, title, children } = props
     return (
-        <div className={'card stat-card ' + (lg ? ' col-span-2' : ' ')}>
+        <div className={'card stat-card  ' + (lg ? ' col-span-2' : '')}>
             <h4>{title}</h4>
             {children}
         </div>
     )
 }
 
-
 export default function Stats() {
     const { globalData } = useAuth()
     const stats = calculateCoffeeStats(globalData)
+    console.log(stats)
 
     const caffeineLevel = calculateCurrentCaffeineLevel(globalData)
-
-    const warningLevel = caffeineLevel < statusLevels['low'].maxLevel ? 'low' : 
-    caffeineLevel < statusLevels['moderate'].maxLevel ? 'moderate' : 'high'
+    const warningLevel = caffeineLevel < statusLevels['low'].maxLevel ?
+        'low' :
+        caffeineLevel < statusLevels['moderate'].maxLevel ?
+            'moderate' :
+            'high'
 
     return (
         <>
@@ -31,7 +33,7 @@ export default function Stats() {
                 <StatCard lg title="Active Caffeine Level">
                     <div className="status">
                         <p><span className="stat-text">{caffeineLevel}</span>mg</p>
-                        <h5 style={{color: statusLevels[warningLevel], background: statusLevels[warningLevel].background}}>{warningLevel}</h5>
+                        <h5 style={{ color: statusLevels[warningLevel].color, background: statusLevels[warningLevel].background }}>{warningLevel}</h5>
                     </div>
                     <p>{statusLevels[warningLevel].description}</p>
                 </StatCard>
@@ -56,17 +58,15 @@ export default function Stats() {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            getTopThreeCoffees(globalData).map((coffee, coffeeIndex) => {
-                                return(
-                                    <tr key={coffeeIndex}>
-                                        <td>{coffee.coffeeName}</td>
-                                        <td>{coffee.count}</td>
-                                        <td>{coffee.percentage}</td>
-                                    </tr>
-                                )
-                            })
-                        }
+                        {getTopThreeCoffees(globalData).map((coffee, coffeeIndex) => {
+                            return (
+                                <tr key={coffeeIndex}>
+                                    <td>{coffee.coffeeName}</td>
+                                    <td>{coffee.count}</td>
+                                    <td>{coffee.percentage}</td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>
